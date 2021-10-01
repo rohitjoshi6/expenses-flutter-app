@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AddExpenseWidget extends StatefulWidget {
-
   @override
   _AddExpenseWidgetState createState() => _AddExpenseWidgetState();
 }
@@ -16,93 +15,64 @@ class _AddExpenseWidgetState extends State<AddExpenseWidget> {
   @override
   Widget build(BuildContext context) {
     final _expenseListProvider = Provider.of<AppDatabase>(context);
+    var primaryColor = Theme.of(context).primaryColor;
     return Container(
-      height: double.infinity,
-      width: double.infinity,
-      margin: EdgeInsets.only(top: 38,left: 28,right: 28, bottom: 28),
+      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       child: Form(
         child: Column(
           children: [
             TextFormField(
-              onChanged: (value){
-                amount=double.parse(value);
-              },
-              onFieldSubmitted: (value){
-                amount=double.parse(value);
-                print(amount);
-              },
-              style: TextStyle(
-                fontSize: 18,
-              ),
-              cursorColor: Color.fromRGBO(71, 8, 154, 1),
-              cursorRadius: Radius.circular(18),
+              onChanged: (value) => amount = double.parse(value),
+              onFieldSubmitted: (value) => amount = double.parse(value),
+              style: TextStyle(fontSize: 18),
               keyboardType: TextInputType.phone,
               decoration: InputDecoration(
-                hintText: "Amount",
-                hintStyle: TextStyle(
-                  fontSize: 18,
-                ),
-                focusedBorder:UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Color.fromRGBO(71, 8, 154, 1)
-                  )
-                ) 
-              ),
+                  hintText: "Amount",
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: primaryColor))),
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 20),
             TextFormField(
-              onChanged: (value){
-                item=value;
-              },
-              onFieldSubmitted: (value){
-                item=value;
-                print(item);
-              },
-              style: TextStyle(
-                fontSize: 18,
-              ),
-              cursorColor: Color.fromRGBO(71, 8, 154, 1),
-              cursorRadius: Radius.circular(18),
+              onChanged: (value) => item = value,
+              onFieldSubmitted: (value) => item = value,
+              style: TextStyle(fontSize: 18),
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
-                hintText: "Item Description",
-                hintStyle: TextStyle(
-                  fontSize: 18,
-                ),
-                focusedBorder:UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Color.fromRGBO(71, 8, 154, 1)
-                  )
-                ) 
-              ),
+                  hintText: "Item Description",
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: primaryColor))),
             ),
-            Expanded(child: Container()),
-            Material(
-              color: Color.fromRGBO(71, 8, 154, 1),
-              borderRadius: BorderRadius.circular(18),
-              child: InkWell(
-                onTap: (){
-                  if (amount == 0 || item == 'Empty') {
-                    _alertEmptyInput(amount == 0, item == 'Empty');
-                  } else {
-                    // amount,item
-                    _expenseListProvider.insertExpense(new Expense(amount: amount, time: DateTime.now(), description: item));
-                    Navigator.pop(context);
-                  }
-                },
-                child: Container(
-                  height: 60,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(18)
+            Spacer(),
+            ElevatedButton(
+              onPressed: () {
+                if (amount == 0 || item == 'Empty') {
+                  _alertEmptyInput(amount == 0, item == 'Empty');
+                } else {
+                  // amount,item
+                  _expenseListProvider.insertExpense(new Expense(
+                      amount: amount, time: DateTime.now(), description: item));
+                  Navigator.pop(context);
+                }
+              },
+              style: ButtonStyle(
+                splashFactory: InkSplash.splashFactory,
+                backgroundColor: MaterialStateProperty.all(primaryColor),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  child: Center(
-                    child: Text(
-                      "Add Expense",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                      ),
+                ),
+              ),
+              child: Container(
+                height: 60,
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(18)),
+                child: Center(
+                  child: Text(
+                    "Add Expense",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
                     ),
                   ),
                 ),
