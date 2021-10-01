@@ -14,6 +14,13 @@ This app will include features like:
 
 - You can suggest interesting features by opening new issues too!
 
+
+## Note:
+
+This is a continuation of previous year's hacktoberfest repository
+
+Please create all your PR's here!
+
 ## Contribution Guidelines
 
 First off, thanks for taking the time to contribute! :tada:
