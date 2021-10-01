@@ -1,10 +1,13 @@
-import 'package:Expense/database/moor_database.dart';
+import 'package:Expense/database/expense.dart';
 import 'package:Expense/pages/home.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/services.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(ExpenseAdapter());
+  await Hive.openBox<Expense>('expenses');
   runApp(MyApp());
 }
 
@@ -17,18 +20,11 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight
     ]);
-    return MultiProvider(
-      providers: [
-        Provider<AppDatabase>(
-          create: (_) => AppDatabase(),
-        ),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: "Flutter",
-        theme: theme(),
-        home: HomePage(),
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: "Flutter",
+      theme: theme(),
+      home: HomePage(),
     );
   }
 

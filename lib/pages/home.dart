@@ -1,11 +1,11 @@
 import 'dart:ui';
 
-import 'package:Expense/database/moor_database.dart';
+import 'package:Expense/database/expense.dart';
 import 'package:Expense/widgets/addExpense.dart';
 import 'package:Expense/widgets/expense.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class HomePage extends StatelessWidget {
   void addExpense(BuildContext context) {
@@ -53,35 +53,25 @@ class HomePage extends StatelessWidget {
             fontWeight: FontWeight.bold),
       ),
       centerTitle: true,
-      // actions: [
-      //   IconButton(
-      //       icon: Icon(Icons.mode_edit), onPressed: () => addExpense(context))
-      // ],
     );
   }
 
   Widget _buildBody(BuildContext context) {
-    final _expenseListProvider = Provider.of<AppDatabase>(context);
-    return _buildListView(context);
+    return ValueListenableBuilder(
+        valueListenable: Hive.box<Expense>('expenses').listenable(),
+        builder: (context, Box<Expense> box, _) {
+          if (box.values.isNotEmpty) {
+            return ListView.builder(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                itemCount: box.values.length,
+                itemBuilder: (_, index) {
+                  return ExpenseWidget(expense: box.getAt(index));
+                });
+          }
+
+          return Container();
+        });
   }
 
-  StreamBuilder<List<Expense>> _buildListView(context) {
-    final _expenseListProvider = Provider.of<AppDatabase>(context);
-    return StreamBuilder(
-      stream: _expenseListProvider.watchAllExpense(),
-      builder: (context, AsyncSnapshot<List<Expense>> snapshot) {
-        final expenses = snapshot.data ?? [];
-
-        return ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            itemCount: expenses.length,
-            itemBuilder: (_, index) {
-              return ExpenseWidget(
-                expense: expenses[index],
-                expenseListProvider: _expenseListProvider,
-              );
-            });
-      },
-    );
-  }
+  // }
 }

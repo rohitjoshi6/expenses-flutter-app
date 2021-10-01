@@ -1,6 +1,7 @@
-import 'package:Expense/database/moor_database.dart';
+import 'dart:math';
+import 'package:Expense/database/expense.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class AddExpenseWidget extends StatefulWidget {
   @override
@@ -9,12 +10,11 @@ class AddExpenseWidget extends StatefulWidget {
 
 class _AddExpenseWidgetState extends State<AddExpenseWidget> {
   double amount = 0;
-
+  final box = Hive.box<Expense>('expenses');
   String item = "Empty";
 
   @override
   Widget build(BuildContext context) {
-    final _expenseListProvider = Provider.of<AppDatabase>(context);
     var primaryColor = Theme.of(context).primaryColor;
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
@@ -44,13 +44,12 @@ class _AddExpenseWidgetState extends State<AddExpenseWidget> {
             ),
             Spacer(),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (amount == 0 || item == 'Empty') {
                   _alertEmptyInput(amount == 0, item == 'Empty');
                 } else {
-                  // amount,item
-                  _expenseListProvider.insertExpense(new Expense(
-                      amount: amount, time: DateTime.now(), description: item));
+                  int id = Random().nextInt(10000000);
+                  await box.put(id, Expense(id, amount, item, DateTime.now()));
                   Navigator.pop(context);
                 }
               },

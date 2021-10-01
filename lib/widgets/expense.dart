@@ -1,13 +1,14 @@
+import 'package:Expense/database/expense.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:Expense/database/moor_database.dart';
 
 class ExpenseWidget extends StatelessWidget {
   final Expense expense;
-  final expenseListProvider;
+  final box = Hive.box<Expense>('expenses');
 
-  ExpenseWidget({this.expense, this.expenseListProvider});
+  ExpenseWidget({this.expense});
 
   @override
   Widget build(BuildContext context) {
@@ -63,9 +64,7 @@ class ExpenseWidget extends StatelessWidget {
             Icons.delete,
             color: Colors.black54,
           ),
-          onPressed: () {
-            expenseListProvider.deleteExpense(expense);
-          },
+          onPressed: () async => await box.delete(expense.id),
         ),
       ],
     );
