@@ -20,17 +20,13 @@ class Expense extends DataClass implements Insertable<Expense> {
   factory Expense.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
-    final intType = db.typeSystem.forDartType<int>();
-    final doubleType = db.typeSystem.forDartType<double>();
-    final dateTimeType = db.typeSystem.forDartType<DateTime>();
-    final stringType = db.typeSystem.forDartType<String>();
     return Expense(
-      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
-      amount:
-          doubleType.mapFromDatabaseResponse(data['${effectivePrefix}amount']),
-      time:
-          dateTimeType.mapFromDatabaseResponse(data['${effectivePrefix}time']),
-      description: stringType
+      id: const IntType().mapFromDatabaseResponse(data['${effectivePrefix}id']),
+      amount: const RealType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}amount']),
+      time: const DateTimeType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}time']),
+      description: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}description']),
     );
   }
@@ -108,7 +104,7 @@ class Expense extends DataClass implements Insertable<Expense> {
   int get hashCode => $mrjf($mrjc(id.hashCode,
       $mrjc(amount.hashCode, $mrjc(time.hashCode, description.hashCode))));
   @override
-  bool operator ==(dynamic other) =>
+  bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Expense &&
           other.id == this.id &&
@@ -198,60 +194,38 @@ class $ExpensesTable extends Expenses with TableInfo<$ExpensesTable, Expense> {
   final String _alias;
   $ExpensesTable(this._db, [this._alias]);
   final VerificationMeta _idMeta = const VerificationMeta('id');
-  GeneratedIntColumn _id;
+  GeneratedColumn<int> _id;
   @override
-  GeneratedIntColumn get id => _id ??= _constructId();
-  GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn('id', $tableName, false,
-        hasAutoIncrement: true, declaredAsPrimaryKey: true);
-  }
-
+  GeneratedColumn<int> get id =>
+      _id ??= GeneratedColumn<int>('id', aliasedName, false,
+          typeName: 'INTEGER',
+          requiredDuringInsert: false,
+          defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
   final VerificationMeta _amountMeta = const VerificationMeta('amount');
-  GeneratedRealColumn _amount;
+  GeneratedColumn<double> _amount;
   @override
-  GeneratedRealColumn get amount => _amount ??= _constructAmount();
-  GeneratedRealColumn _constructAmount() {
-    return GeneratedRealColumn(
-      'amount',
-      $tableName,
-      false,
-    );
-  }
-
+  GeneratedColumn<double> get amount =>
+      _amount ??= GeneratedColumn<double>('amount', aliasedName, false,
+          typeName: 'REAL', requiredDuringInsert: true);
   final VerificationMeta _timeMeta = const VerificationMeta('time');
-  GeneratedDateTimeColumn _time;
+  GeneratedColumn<DateTime> _time;
   @override
-  GeneratedDateTimeColumn get time => _time ??= _constructTime();
-  GeneratedDateTimeColumn _constructTime() {
-    return GeneratedDateTimeColumn(
-      'time',
-      $tableName,
-      false,
-    );
-  }
-
+  GeneratedColumn<DateTime> get time =>
+      _time ??= GeneratedColumn<DateTime>('time', aliasedName, false,
+          typeName: 'INTEGER', requiredDuringInsert: true);
   final VerificationMeta _descriptionMeta =
       const VerificationMeta('description');
-  GeneratedTextColumn _description;
+  GeneratedColumn<String> _description;
   @override
-  GeneratedTextColumn get description =>
-      _description ??= _constructDescription();
-  GeneratedTextColumn _constructDescription() {
-    return GeneratedTextColumn(
-      'description',
-      $tableName,
-      false,
-    );
-  }
-
+  GeneratedColumn<String> get description => _description ??=
+      GeneratedColumn<String>('description', aliasedName, false,
+          typeName: 'TEXT', requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [id, amount, time, description];
   @override
-  $ExpensesTable get asDslTable => this;
+  String get aliasedName => _alias ?? 'expenses';
   @override
-  String get $tableName => _alias ?? 'expenses';
-  @override
-  final String actualTableName = 'expenses';
+  String get actualTableName => 'expenses';
   @override
   VerificationContext validateIntegrity(Insertable<Expense> instance,
       {bool isInserting = false}) {
@@ -287,8 +261,8 @@ class $ExpensesTable extends Expenses with TableInfo<$ExpensesTable, Expense> {
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
   Expense map(Map<String, dynamic> data, {String tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return Expense.fromData(data, _db, prefix: effectivePrefix);
+    return Expense.fromData(data, _db,
+        prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
