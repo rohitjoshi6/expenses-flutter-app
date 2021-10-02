@@ -1,47 +1,57 @@
-# Contribution Guildelines
+## Contribution Guidelines
 
-## Please follow these steps if you wish to contribute to the project
+- Select an issue and ask to be _assigned_ to it.
+- **Star** the repository.
+- On the [GitHub page for this repository](https://github.com/PCCoE-Hacktoberfest-21/expenses-flutter-app), click on the Button "**Fork**".
+  ![fork image](https://help.github.com/assets/images/help/repository/fork_button.jpg)
+- Create clone **_your forked repository_** on your local machine.
+  ![code ui](https://docs.github.com/assets/images/help/repository/code-button.png)
 
-1. Go through the Issues to see if, what you want is already in discussion.
+  For example, run this command inside your terminal:
 
-2. Open a new Issue if you do not find what you need. Describe the bug, feature request, problems, additions you might want or anything clearly in the Issue message.
+  ```bash
+  git clone https://github.com/<your-github-username>/FRIDAY.git
+  ```
 
-3. Mention in the Issue that you want to work on it.
+  **Replace \<your-github-username\>!**
 
-4. Wait for the approval from the Maintainers of this project before startig to work on it.
+  Learn more about [forking](https://help.github.com/en/github/getting-started-with-github/fork-a-repo) and [cloning a repo](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
 
-5. Create a pull request after making the changes and mention the Issue number that your pull request is related to.
+- Before you make any changes, [keep your fork in sync](https://www.freecodecamp.org/news/how-to-sync-your-fork-with-the-original-git-repository/) to avoid merge conflicts:
 
-6. Make the required changes if the reviewer asks for them. 
+  ```bash
+  git remote add upstream https://github.com/PCCoE-Hacktoberfest-21/expenses-flutter-app.git
+  git fetch upstream
+  git pull upstream master
+  git push
+  ```
 
-7. That's it! Your pull request will be merged once everything seems okay.
+- If you run into a **merge conflict**, you have to resolve the conflict. There are a lot of guides online, or you can try this one by [opensource.com](https://opensource.com/article/20/4/git-merge-conflict).
 
-This project is a Flutter application.
+- Checkout to development branch (_name your branch according to the issue name_).
 
-A few resources to get you started if this is your first Flutter project:
+  ```bash
+  git checkout -b <branch-name>
+  ```
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- Write your code in the Python file.
+- Add the changes with `git add`, `git commit` ([write a good commit message](https://chris.beams.io/posts/git-commit/), if possible):
 
-For help getting started with Flutter, view flutter
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+  ```bash
+  git add -A
+  git commit -m "<your message>"
+  ```
 
-## Special Guidelines for contributing to this Project
+- Push the code _to your repository_.
 
-- The dependencies and assets will all be included in the `pubspec.yaml` file.
+  ```bash
+  git push origin <branch-name>
+  ```
 
-- All the main files related to the project are contained in the `lib` folder.
+- Go to the GitHub page of _your fork_, and **make a pull request**:
 
-- Global widgets should be included in the `lib/widgets` folder.
+  ![pull request image](https://help.github.com/assets/images/help/pull_requests/choose-base-and-compare-branches.png)
 
-- Providers should be included in the `lib/providers` folder.
+  Read more about pull requests on the [GitHub help pages](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
 
-- Models should be included in the `lib/models` folder.
-
-- All the pages of the app should be included in the `lib/pages` folder with `$PAGE_NAME.dart`.
-
-- Add all the necessary Android and IOS permissions in the `android` and `ios` folders, respectively.
-
-- For using external resources, add them to the `assets` folder as mentioned in the comments in `pubspec.yaml` file.
-  
+- Now wait, until one of us _reviews your Pull Request_! If there are any conflicts, you will get a notification.
