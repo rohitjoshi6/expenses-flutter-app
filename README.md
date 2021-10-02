@@ -5,33 +5,31 @@ A Flutter app to keep track of expenses for any organization.
 This app will include features like:
 
 - Adding Transactions
-  
 - Categorizing expenses
-  
 - Track Regular Budget Limits
-
 - Visualize expense areas in form of Graphs and Bars
-
 - You can suggest interesting features by opening new issues too!
 
+### Note:
 
-## Note:
-
-This is a continuation of previous year's hacktoberfest repository
-
+This is a continuation of previous year's hacktoberfest repository.
 Please create all your PR's here!
 
-## Contribution Guidelines
+## Build Instructions
 
-First off, thanks for taking the time to contribute! :tada:
+- Clone the repo
+- Run `flutter pub get` in a terminal to get all the dependencies
+- Run `flutter pub run build_runner run` to generate classes needed by the project
 
-The guidelines for contributing to this repository can be found in the [CONTRIBUTING.md file](https://github.com/pccoeacm/expenses-flutter-app/blob/master/CONTRIBUTING.md). 
+## How to Contribute?
 
-These guidelines are a way to communicate how people should contribute. These guidelines will help you verify that you're submitting well-formed pull requests and opening useful issues. For both contributors and us, contribution guidelines will save time and hassle caused by improperly created pull requests or issues that have to be rejected and re-submitted.
-
-## Code of Conduct
-
-We have adopted a code of conduct to define community standards, signal a welcoming and inclusive project, and outline procedures for handling abuse. Please go through the [Code of Conduct file](https://github.com/pccoeacm/expenses-flutter-app/blob/master/CODE_OF_CONDUCT.md) so that you understand the community standards. 
+- Take a look at the existing issues or create your own Issues
+- Wait for the issue to be assigned to you after which you can start working on it.
+- Fork the Repository and create a branch for the issue you are working on.
+- Read the [Code of Conduct](CODE_OF_CONDUCT.md)
+- Create a Pull Request which will be reviewed by the maintainers and suggestions would be added to improve it (if needed)
+- Describe what your codeblock / function does in the PR.
+- Having difficulty in contributing? Read the [Contribution Guide](CONTRIBUTING.md) for a detailed explanation.
 
 ## License
 
